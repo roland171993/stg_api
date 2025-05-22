@@ -3,7 +3,7 @@ const logger = require('../../config/logger');
 const handleError = require('../../middlewares/error.middleware');
 
 describe('Error Middleware', () => {
-  let err, req, res, next;
+  let err, req, res, next ;
   beforeEach(() => {
     req = {};
     res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
