@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="fr">
+  <body>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"><img src="asset/img/Android stop galère logo 72x72.png" alt="Logo StopGalere" width="18%">StopGalère-CI</a>
+      
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <button type="button" class="btn btn-dark" ng-click="outUser()" >Deconnexion</button>
+        </li>
+      </ul>
+    </nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="/webmanager/">
+              <span data-feather="home"></span>
+              Tableau de bord <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/addjob">
+              <span data-feather="file"></span>
+              Ajouter emplois
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/lettre-motivation">
+              <span data-feather="users"></span>
+              Lettre de motivation
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/cv">
+              <span data-feather="bar-chart-2"></span>
+              CV
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/historique">
+              <span data-feather="layers"></span>
+              Historique
+            </a>
+          </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Réglage</span>
+          <a class="d-flex align-items-center text-muted" href="/webmanager/reglage">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/notifications">
+              <span data-feather="file-text"></span>
+               Notifications
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/image-entreprise">
+              <span data-feather="file-text"></span>
+              Mes images
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/planifier">
+              <span data-feather="file-text"></span>
+              Planifier
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/options">
+              <span data-feather="file-text"></span>
+              Options
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/condition">
+              <span data-feather="file-text"></span>
+              Conditions-generales-utilisation
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h3>Options <a href="webmanager/options/secteuradd#secteurAdd"> <button class="btn btn-primary">Ajouter secteur</button></a> || <a href="webmanager/options/modeadd#modeadd"> <button class="btn btn-info">Ajouter mode</button></a> || <a href="webmanager/options/sexeadd#sexeadd"> <button class="btn btn-success">Ajouter Sexe</button></a> || <a href="webmanager/options/contratadd#contratadd"> <button class="btn btn-dark">Ajouter Contract</button></a></h3>
+
+      </div><br><br>
+
+      <div class="container" id="baccueil">
+  <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+  <div ng-show="SuccessMessage">
+      <p class="alert alert-success">{{SuccessMessage}}</p>
+  </div>
+  
+  <div ng-show="failMessage">
+      <p class="alert alert-danger">{{failMessage}}</p>
+  </div>
+  <div class="row">
+    
+
+    <!-- set secteur-->
+    <div class="col-12 col-md-8"  id="secteurAdd" ng-if="displayAddSecteur == true">
+      <h4 style="margin-bottom:50px">Ajouter de secteur d'activité</h4>
+        <form  ng-submit="postNewSecteur(data.secteur)" style="margin-bottom:50px">
+  
+    <label for="libelle">Libelle</label>
+        <input type="text" name="libelle" id="libelle" placeholder="libelle" class="form-control" ng-model="data.secteur.libelle" required> 
+       <br><br>
+
+        <div ng-show="SuccessMessage">
+            <p class="alert alert-success">{{SuccessMessage}}</p>
+        </div>
+        
+        <div ng-show="failMessage">
+            <p class="alert alert-danger">{{failMessage}}</p>
+        </div>
+
+        <button class="btn btn-primary">Enregistrer</button>
+    </form>
+    </div>
+    <!---->
+    <!-- set sexe-->
+    <div class="col-12 col-md-8"  id="sexeadd" ng-if="displayAddSexe == true">
+      <h4 style="margin-bottom:50px">Ajouter de Sexe</h4>
+        <form  ng-submit="postNewSexe(data.sexe)" style="margin-bottom:50px">
+  
+    <label for="libelle">Libelle</label>
+        <input type="text" name="libelle" id="libelle" placeholder="libelle" class="form-control" ng-model="data.sexe.libelle" required> 
+       <br><br>
+
+        <div ng-show="SuccessMessage">
+            <p class="alert alert-success">{{SuccessMessage}}</p>
+        </div>
+        
+        <div ng-show="failMessage">
+            <p class="alert alert-danger">{{failMessage}}</p>
+        </div>
+
+        <button class="btn btn-primary">Enregistrer</button>
+    </form>
+    </div>
+     <!---->
+    <!-- set Type mode-->
+    <div class="col-12 col-md-8" id="modeadd"  ng-if="displayAddMode == true">
+      <h4 style="margin-bottom:50px">Ajouter de Mode</h4>
+        <form  ng-submit="postNewMode(data.mode)" style="margin-bottom:50px">
+  
+    <label for="libelle">Libelle</label>
+        <input type="text" name="libelle" id="libelle" placeholder="libelle" class="form-control" ng-model="data.mode.libelle" required> 
+       <br><br>
+
+        <div ng-show="SuccessMessage">
+            <p class="alert alert-success">{{SuccessMessage}}</p>
+        </div>
+        
+        <div ng-show="failMessage">
+            <p class="alert alert-danger">{{failMessage}}</p>
+        </div>
+
+        <button class="btn btn-primary">Enregistrer</button>
+    </form>
+    </div>
+     <!---->
+    <!-- set type Contrat-->
+    <div class="col-12 col-md-8"  id="contratadd" ng-if="displayAddContrat == true">
+      <h4 style="margin-bottom:50px">Ajouter type Contrat</h4>
+        <form  ng-submit="postNewContrat(data.contrat)" style="margin-bottom:50px">
+  
+    <label for="libelle">Libelle</label>
+        <input type="text" name="libelle" id="libelle" placeholder="libelle" class="form-control" ng-model="data.contrat.libelle" required> 
+       <br><br>
+
+        <div ng-show="SuccessMessage">
+            <p class="alert alert-success">{{SuccessMessage}}</p>
+        </div>
+        
+        <div ng-show="failMessage">
+            <p class="alert alert-danger">{{failMessage}}</p>
+        </div>
+
+        <button class="btn btn-primary">Enregistrer</button>
+    </form>
+    </div>
+</div>
+  <br><br>
+  <h4>Liste des secteurs d'activités <a href="webmanager/options/secteuradd#secteurAdd"> <button class="btn btn-primary">Ajouter secteur</button></a></h4>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Libelle</th>
+        </tr>
+      </thead>
+      <tbody >
+        <tr ng-repeat="data in secteur">
+          <td>{{data.libelle}}</td>
+          <td><button type="button" class="btn btn-danger" ng-click="deleteSecteur(data._id)" >Supprimer</button></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <!-- mode -->
+    <br> <br>
+    <h4>Liste des mode de travail <a href="webmanager/options/modeadd#modeadd"> <button class="btn btn-info">Ajouter mode</button></a> </h4>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Libelle</th>
+        </tr>
+      </thead>
+      <tbody >
+        <tr ng-repeat="data in mode">
+          <td>{{data.libelle}}</td>
+          <td><button type="button" class="btn btn-danger" ng-click="deleteLettreForId(data._id)" >Supprimer</button></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <!-- types -->
+    <br> <br>
+    <h4>Liste des types de contrat <a href="webmanager/options/contratadd#contratadd"> <button class="btn btn-dark">Ajouter Contract</button></a> </h4>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Libelle</th>
+        </tr>
+      </thead>
+      <tbody >
+        <tr ng-repeat="data in contrat">
+          <td>{{data.libelle}}</td>
+          <td><button type="button" class="btn btn-danger" ng-click="deleteLettreForId(data._id)" >Supprimer</button></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <!-- sexe -->
+    <br> <br>
+    <h4>Liste des sexe  <a href="webmanager/options/sexeadd#sexeadd"> <button class="btn btn-success">Ajouter Sexe</button></a> </h4>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Libelle</th>
+        </tr>
+      </thead>
+      <tbody >
+        <tr ng-repeat="data in sexe">
+          <td>{{data.libelle}}</td>
+          <td><button type="button" class="btn btn-danger" ng-click="deleteLettreForId(data._id)" >Supprimer</button></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <!---->
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"> </div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"> </div>
+    </main>
+  </div>
+</div>
+<script src="asset/js/query-3.3.1.slim.min.js" ></script>
+      <script src="asset/js/bootstrap.bundle.min.js" ></script>
+        <script src="asset/js/feather.min.js"></script>
+        <script src="asset/js/Chart.min.js"></script>
+        <script src="asset/js/dashboard.js"></script></body>
+</html>

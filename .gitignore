@@ -1,0 +1,20 @@
+# Dependencies
+/node_modules/
+
+# Environment
+.env
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+
+# Runtime
+/dist/
+/coverage/
+
+# IDEs
+.vscode/
+/.idea/
+
+# Mac
+.DS_Store

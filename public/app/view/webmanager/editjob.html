@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="fr">
+  <body>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"><img src="asset/img/Android stop galère logo 72x72.png" alt="Logo StopGalere" width="18%">StopGalère-CI</a>
+  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <button type="button" class="btn btn-dark" ng-click="outUser()" >Deconnexion</button>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="/webmanager/">
+              <span data-feather="home"></span>
+              Tableau de bord <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/addjob">
+              <span data-feather="file"></span>
+              Ajouter emplois
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/lettre-motivation">
+              <span data-feather="users"></span>
+              Lettre de motivation
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/cv">
+              <span data-feather="bar-chart-2"></span>
+              CV
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/historique">
+              <span data-feather="layers"></span>
+              Historique
+            </a>
+          </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Réglage</span>
+          <a class="d-flex align-items-center text-muted" href="/webmanager/reglage">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/notifications">
+              <span data-feather="file-text"></span>
+               Notifications
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/image-entreprise">
+              <span data-feather="file-text"></span>
+              Mes images
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/planifier">
+              <span data-feather="file-text"></span>
+              Planifier
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/options">
+              <span data-feather="file-text"></span>
+              Options
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/condition">
+              <span data-feather="file-text"></span>
+              Conditions-generales-utilisation
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      </div>
+
+      <div class="container">
+  <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+  <div class="row">
+    <div class="col-12 col-md-8">
+        
+        <form  ng-submit="editEmploi(emploi)" style="margin-bottom:50px">
+  
+    <label for="libelle">Libelle</label>
+        <input type="text" name="libelle" id="libelle"  class="form-control" ng-model="emploi.libelle" required> 
+
+        <label for="dateajout">Date d'ajout</label>
+        <input type="text" name="dateajout" id="dateajout" placeholder="date d'ajout" class="form-control" ng-model="emploi.date_ajout" required> 
+
+        <label for="email">E-mail</label>
+        <input type="email" name="email" id="libelle" placeholder="email" class="form-control" ng-model="emploi.email_auteur" required>
+
+        <label for="siteweb">Site web</label>
+        <input type="text" name="siteweb" id="siteweb" placeholder="site web" class="form-control" ng-model="emploi.site_web_auteur" > 
+
+        <label for="mobile1">Mobile N°1</label>
+        <input type="text" name="mobile1" id="mobile1" placeholder="Mobile N°1" class="form-control" ng-model="emploi.mobile_n1_auteur"> 
+
+        <label for="mobile2">Mobile N°2</label>
+        <input type="text" name="mobile2" id="mobile2" placeholder="Mobile N°2" class="form-control" ng-model="emploi.mobile_n2_auteur" >
+
+        <label for="latitude">Latitude</label>
+        <input type="text" name="latitude" id="latitude" placeholder="Latitude" class="form-control" ng-model="emploi.latitude_auteur" required> 
+
+        <label for="longitude">Longitude</label>
+        <input type="text" name="longitude" id="longitude" placeholder="Longitude" class="form-control" ng-model="emploi.logitude_auteur" required> 
+
+        <label for="societe">Société</label>
+        <input type="text" name="societe" id="societe" placeholder="Société" class="form-control" ng-model="emploi.societe" required>
+
+        <label for="imagesociete">Image Société</label>
+        <input type="text" name="imagesociete" id="imagesociete" placeholder="Uri Image Société" class="form-control" ng-model="emploi.societe_img_url" > 
+
+        <label for="salaire">Salaire</label>
+        <input type="text" name="salaire" id="salaire" placeholder="Salaire" class="form-control" ng-model="emploi.salaire" > 
+
+        <label for="ville">Ville</label>
+        <input type="text" name="ville" id="ville" placeholder="ville" class="form-control" ng-model="emploi.ville" required>
+
+        <label for="experience">Expérience Professionnelle</label>
+        <input type="text" name="experience" id="experience" placeholder="Expérience Professionnelle" class="form-control" ng-model="emploi.experience" > 
+
+        <label for="niveau">Niveau d'études</label>
+        <input type="text" name="niveau" id="niveau" placeholder="Niveau d'études" class="form-control" ng-model="emploi.niveau_etudes" required> 
+
+        <label for="datelimite">Date Limite</label>
+        <input type="text" name="datelimite" id="datelimite" placeholder="Date Limite" class="form-control" ng-model="emploi.date_limite"> <br>
+
+        <label for="description">Description</label>
+        <textarea name="description" id="description" cols="60" rows="10" ng-model="emploi.description" required>
+
+        </textarea> <br><br>
+
+        <div ng-show="SuccessMessage">
+            <p class="alert alert-success">{{SuccessMessage}}</p>
+        </div>
+        
+        <div ng-show="failMessage">
+            <p class="alert alert-danger">{{failMessage}}</p>
+        </div>
+
+        <label for="modetravail">Mode Travail</label>
+        <select name="modetravail" id="modetravail" ng-model="emploi._id_mode_travail" ng-options="contrat.libelle for contrat in data.mode" required> 
+        </select>          
+        <span class="alert alert-success">{{emploi._id_mode_travail.libelle}}</span>
+        <div>
+
+        <label for="secteur">Secteur Activité</label>
+        <select name="secteur" id="secteur" ng-model="emploi._id_setc_activite" ng-options="contrat.libelle for contrat in data.secteur" required>
+        </select>
+        <span class="alert alert-success">{{emploi._id_setc_activite.libelle}} </span>
+
+      </div>
+        <div>
+        <label for="sexe">Sexe</label>
+        <select name="sexe" id="sexe" ng-model="emploi._id_sexe" ng-options="contrat.libelle for contrat in data.sexe" required> 
+        </select>
+        <span class="alert alert-success">{{emploi._id_sexe.libelle}}</span>
+        <div>
+
+        <label for="typecontrat">Type Contrat</label>
+        <select name="secteur"  ng-options="contrat.libelle for contrat in data.type" id="typecontrat" ng-model="emploi._id_type_contrat" required > 
+        </select>
+        <span class="alert alert-success">{{emploi._id_type_contrat.libelle}}</span>
+        <br><br>
+        
+        <!--
+
+        -->
+
+        <label for="nepublier"> Ne pas publier</label>
+            <input type="checkbox"  name="nepublier" id="nepublier" ng-model="emploi._id_ne_pas_publier" checked>
+        <span ng-if="emploi._id_ne_pas_publier === 'true'" class="alert alert-danger" style="margin-bottom:5px">
+            Hors ligne
+          </span>
+          <span ng-if="emploi._id_ne_pas_publier === 'false'" class="alert alert-success">
+           En ligne
+        </span>
+        <br> <br> <br>
+        
+        <button class="btn btn-primary">Modifier</button> <a href="/webmanager"><button class="btn btn-success" >Valide</button></a>
+    </form>
+
+
+</div>
+    </main>
+  </div>
+</div>
+<script src="asset/js/query-3.3.1.slim.min.js" ></script>
+      <script src="asset/js/bootstrap.bundle.min.js" ></script>
+        <script src="asset/js/feather.min.js"></script>
+        <script src="asset/js/Chart.min.js"></script>
+        <script src="asset/js/dashboard.js"></script></body>
+</html>

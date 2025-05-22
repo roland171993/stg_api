@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="/">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Stopgalere-ci</title>
+    
+
+   
+       
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    
+    
+   
+    <!-- Angular File -->
+   <script src="asset/js/angular.min.js"></script>
+   <script src="asset/js/angular-route.min.js"></script>
+   <script src="asset/js/ng-upload.min.js"></script>
+    <!-- Angular route Config -->
+    <script src="app/apiModule.js"></script>
+    <script src="app/apiRouter.js"></script>
+       <!-- Angular Controller -->
+    <script src="app/controller/mainCtrl.js"></script>
+    <script src="app/controller/postCtrl.js"></script>
+    <script src="app/controller/getCtrl.js"></script>
+
+    <!-- Angular Services -->
+  
+    <script src="app/service/authenService.js"></script>
+    <script src="app/service/postService.js"></script>
+    <script src="app/service/getService.js"></script>
+    <!-- Custom styles for this template -->
+    <link href="asset/css/dashboard.css" rel="stylesheet">
+     <!-- Bootstrap core CSS -->
+     <link href="asset/css/bootstrap.min.css" rel="stylesheet">
+   
+   
+  </head>
+
+  
+  <body ng-app="apiModule" ng-controller="mainCtrl" >
+      <div ng-view style="width: 98%"></div>
+     <!-- Bootstrap core JavaScript
+    ================================================== -->
+    
+  </body>
+</html>

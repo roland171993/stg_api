@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fr">
+  <body>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"><img src="asset/img/Android stop galère logo 72x72.png" alt="Logo StopGalere" width="18%">StopGalère-CI</a>
+      
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <button type="button" class="btn btn-dark" ng-click="outUser()" >Deconnexion</button>
+        </li>
+      </ul>
+    </nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="/webmanager/">
+              <span data-feather="home"></span>
+              Tableau de bord <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/addjob">
+              <span data-feather="file"></span>
+              Ajouter emplois
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/lettre-motivation">
+              <span data-feather="users"></span>
+              Lettre de motivation
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/cv">
+              <span data-feather="bar-chart-2"></span>
+              CV
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/historique">
+              <span data-feather="layers"></span>
+              Historique
+            </a>
+          </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Réglage</span>
+          <a class="d-flex align-items-center text-muted" href="/webmanager/reglage">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/notifications">
+              <span data-feather="file-text"></span>
+               Notifications
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/image-entreprise">
+              <span data-feather="file-text"></span>
+              Mes images
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/planifier">
+              <span data-feather="file-text"></span>
+              Planifier
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/options">
+              <span data-feather="file-text"></span>
+              Options
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/condition">
+              <span data-feather="file-text"></span>
+              Conditions-generales-utilisation
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h3>Notifications </h3>
+
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-4" id="editLettre">
+          <h4 >App mise a jour</h4>
+          <br>
+        <br>
+          <form  ng-submit="updateApp(appUpdate)" style="margin-bottom:50px" ng-repeat="appUpdate in appUpdate">
+      
+            <label for="name" >Version Name</label>
+                <input type="text" name="name" id="name" class="form-control" ng-model="appUpdate.currentVersion" required> <br>
+                <label for="code">Version Code</label>
+                <input type="text" name="code" id="code" class="form-control" ng-model="appUpdate.response" required> <br>
+                <label for="message">Update Message</label>
+                <input type="text" name="message" id="message" class="form-control" ng-model="appUpdate.versionCode" required>   
+               <br><br>
+                <button class="btn btn-success">Mettre a jour</button>
+            </form>
+        </div>
+        <br> <br>
+        <!---->
+        <div class="col-12 col-md-4" > 
+            <div ng-show="SuccessMessage">
+                <p class="alert alert-success">{{SuccessMessage}}</p>
+            </div>
+            
+            <div ng-show="failMessage">
+                <p class="alert alert-danger">{{failMessage}}</p>
+            </div>
+
+        </div>
+        <div class="col-12 col-md-4" id="editLettre">
+          <h4>Agence de publication</h4>
+        <br>
+          <form  name="myForm" ng-submit="agenceUpdate(agence)" style="margin-bottom:50px" ng-repeat="agence in pub">
+      
+                <label>ADMOB
+                <input type="radio" ng-model="agence.advetiser"  value="1"> 
+                </label> <br>
+
+                <label>ADCOLONY
+                <input type="radio" ng-model="agence.advetiser" value="2" >
+                </label><br>
+
+                <label>APPLOWVIN
+                <input type="radio"   ng-model="agence.advetiser"  id="APPLOWVIN" value="3"> 
+                </label><br>
+
+                <label>VUNGLE
+                <input type="radio" ng-model="agence.advetiser" value="4" >
+              </label> <br>
+
+                <label>STARTAPP
+                <input type="radio" ng-model="agence.advetiser"  value="5" >
+              </label> <br>      
+                <br><br>
+                <button class="btn btn-primary">Mettre a jour</button>
+            </form>
+        </div>
+    
+    </div>
+        <br><br>
+      <div class="container" id="baccueil">
+  <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+  
+        
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"> </div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"> </div>
+    
+  
+    </main>
+  </div>
+</div>
+<script src="asset/js/query-3.3.1.slim.min.js" ></script>
+      <script src="asset/js/bootstrap.bundle.min.js" ></script>
+        <script src="asset/js/feather.min.js"></script>
+        <script src="asset/js/Chart.min.js"></script>
+        <script src="asset/js/dashboard.js"></script></body>
+</html>

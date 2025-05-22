@@ -1,0 +1,22 @@
+<h1 class="page-header">Register User</h1><br>
+<div ng-show="SuccessMessage">
+    <p class="alert alert-success">{{SuccessMessage}}</p>
+</div>
+
+<div ng-show="failMessage">
+    <p class="alert alert-danger">{{failMessage}}</p>
+</div>
+
+
+<form ng-submit="regUser(regData.data)" >
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username" placeholder="Please enter username" class="form-control" ng-model="regData.data.username"> <br>
+
+    <label for="email">email</label>
+    <input type="text" name="email" id="email" placeholder="Please enter email" class="form-control" ng-model="regData.data.email"> <br>
+
+    <label for="password">password</label>
+    <input type="password" name="password" id="password" placeholder="Please enter password" class="form-control" ng-model="regData.data.password"> <br><br>
+
+    <button class="btn btn-primary">Register</button>
+</form>
