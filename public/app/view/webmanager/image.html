@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fr">
+  <body>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"><img src="asset/img/Android stop galère logo 72x72.png" alt="Logo StopGalere" width="18%">StopGalère-CI</a>
+      
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <button type="button" class="btn btn-dark" ng-click="outUser()" >Deconnexion</button>
+        </li>
+      </ul>
+    </nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="/webmanager/">
+              <span data-feather="home"></span>
+              Tableau de bord <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/addjob">
+              <span data-feather="file"></span>
+              Ajouter emplois
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/lettre-motivation">
+              <span data-feather="users"></span>
+              Lettre de motivation
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/cv">
+              <span data-feather="bar-chart-2"></span>
+              CV
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/historique">
+              <span data-feather="layers"></span>
+              Historique
+            </a>
+          </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Réglage</span>
+          <a class="d-flex align-items-center text-muted" href="/webmanager/reglage">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/notifications">
+              <span data-feather="file-text"></span>
+               Notifications
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/image-entreprise">
+              <span data-feather="file-text"></span>
+              Mes images
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/planifier">
+              <span data-feather="file-text"></span>
+              Planifier
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/options">
+              <span data-feather="file-text"></span>
+              Options
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/condition">
+              <span data-feather="file-text"></span>
+              Conditions-generales-utilisation
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h3>Mes Image </h3>
+
+      </div>
+
+      <div class="container" >
+  <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+  <div ng-show="SuccessMessage">
+      <p class="alert alert-success">{{SuccessMessage}}</p>
+  </div>
+  
+  <div ng-show="failMessage">
+      <p class="alert alert-danger">{{failMessage}}</p>
+  </div>
+  <div class="table-responsive">
+    
+    <table class="table table-striped table-sm">
+      
+      <thead>
+        <tr>
+          <th>Entreprise</th>
+          <th>URI</th>
+          <th>Logo</th>
+        </tr>
+      </thead>
+      <tbody >
+        <tr ng-repeat="data in donnee">
+          
+          <td>{{data.societe}}</td>
+          <td>{{data.societe_img_url}}</td>
+          <td >
+            <img src="http://{{data.societe_img_url}}" alt="{{data.societe}}" width="60" height="50" >
+          </td>
+          <td><a href="webmanager/edit/{{data._id}}#societe"><button class="btn btn-secondary">Modifier</button></a></td>
+        
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"> </div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"> </div>
+    </main>
+  </div>
+</div>
+<script src="asset/js/query-3.3.1.slim.min.js" ></script>
+      <script src="asset/js/bootstrap.bundle.min.js" ></script>
+        <script src="asset/js/feather.min.js"></script>
+        <script src="asset/js/Chart.min.js"></script>
+        <script src="asset/js/dashboard.js"></script></body>
+</html>

@@ -1,0 +1,27 @@
+<link href="asset/css/floating-labels.css" rel="stylesheet">
+<div ng-show="SuccessMessage">
+    <p class="alert alert-success">{{SuccessMessage}}</p>
+</div>
+
+<div ng-show="failMessage">
+    <p class="alert alert-danger">{{failMessage}}</p>
+</div>
+
+
+<form class="form-signin" ng-submit="logUser(logData.data)">
+    <div class="text-center mb-4">
+      <h1 class="h3 mb-3 font-weight-normal">StopGalère CI</h1>
+    </div>
+
+    <div class="form-label-group">
+      <input type="text" id="inputEmail" class="form-control" name="name" placeholder="login" ng-model="logData.data.name" required autofocus>
+      <label for="inputEmail">login</label>
+    </div>
+
+    <div class="form-label-group">
+      <input type="password" id="inputPassword" name="password" class="form-control"  placeholder="Password" ng-model="logData.data.password" required>
+      <label for="inputPassword">Mot de passe</label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block">Connexion</button>
+    <p class="mt-5 mb-3 text-muted text-center">&copy; stopgalere-ci | 2018-2019 </p>
+</form>

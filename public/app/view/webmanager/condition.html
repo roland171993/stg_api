@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="fr">
+  <body>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"><img src="asset/img/Android stop galère logo 72x72.png" alt="Logo StopGalere" width="18%">StopGalère-CI</a>
+  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="#">Déconnexion</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="/webmanager/">
+              <span data-feather="home"></span>
+              Tableau de bord <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/addjob">
+              <span data-feather="file"></span>
+              Ajouter emplois
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/lettre-motivation">
+              <span data-feather="users"></span>
+              Lettre de motivation
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/cv">
+              <span data-feather="bar-chart-2"></span>
+              CV
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/historique">
+              <span data-feather="layers"></span>
+              Historique
+            </a>
+          </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Réglage</span>
+          <a class="d-flex align-items-center text-muted" href="/webmanager/reglage">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/notifications">
+              <span data-feather="file-text"></span>
+               Notifications
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/image-entreprise">
+              <span data-feather="file-text"></span>
+              Mes images
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/planifier">
+              <span data-feather="file-text"></span>
+              Planifier
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/options">
+              <span data-feather="file-text"></span>
+              Options
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webmanager/condition">
+              <span data-feather="file-text"></span>
+              Conditions-generales-utilisation
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h3>Condition d'utilisation general <a href="webmanager/condition#ajouter"> <button class="btn btn-primary">Ajouter</button></a></h3>
+
+      </div>
+
+      <div class="container" id="baccueil">
+  <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+  <div ng-show="SuccessMessage">
+      <p class="alert alert-success">{{SuccessMessage}}</p>
+  </div>
+  
+  <div ng-show="failMessage">
+      <p class="alert alert-danger">{{failMessage}}</p>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Contenu</th>
+          <th>En ligne</th>
+        </tr>
+      </thead>
+      <tbody >
+        <tr ng-repeat="data in donnee">
+          <td>{{data.contenu.substr(0,550)}}</td>
+          <td >
+            <span ng-if="data._id_ne_pas_publier === 'true'" class="alert alert-danger" style="margin-bottom:5px">
+              Hors ligne
+            </span>
+            <span ng-if="data._id_ne_pas_publier === 'false'" class="alert alert-success">
+              En ligne 
+          </span>
+          </td>
+          <td><button type="button" class="btn btn-danger" ng-click="deleteCondForId(data._id)" >Supprimer</button></td>
+          <td><a href="webmanager/condition/{{data._id}}#contenu"><button class="btn btn-secondary">Voir / Modifier</button></a></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+        
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"> </div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"> </div>
+
+  <div class="row">
+    <div class="col-12 col-md-8" ng-if="divUpdate == false">
+      <h4 style="margin-bottom:50px">Ajouter Condition d'utilisateur</h4>
+        <form  ng-submit="postNewCondition(data)" style="margin-bottom:50px">
+  
+    
+        <label for="ajouter">Description</label>
+        <textarea name="contenu" id="ajouter" cols="60" rows="10" ng-model="data.contenu" required>
+          
+        </textarea> <br><br>
+
+        <div ng-show="SuccessMessage">
+            <p class="alert alert-success">{{SuccessMessage}}</p>
+        </div>
+        
+        <div ng-show="failMessage">
+            <p class="alert alert-danger">{{failMessage}}</p>
+        </div>
+        <label for="nepublier"> Ne pas publier</label>
+        <input type="checkbox"  name="nepublier" id="nepublier" ng-model="data.nepublier">
+        <br> <br> <br>
+
+        <button class="btn btn-primary">Enregistrer</button>
+    </form>
+    </div>
+    <!---->
+    <!---->
+    <!---->
+    
+    <div class="col-12 col-md-8" id="editLettre" ng-if="divUpdate == true">
+      <h4 >Modifier les Condition d'utilisation</h4>
+      <form  ng-submit="updateCondition(update)" style="margin-bottom:50px">
+            <label for="contenu">Description</label>
+            <textarea name="contenu" id="contenu" cols="100" rows="15" ng-model="update.contenu" required>
+              
+            </textarea> <br><br>
+    
+            <div ng-show="SuccessMessage">
+                <p class="alert alert-success">{{SuccessMessage}}</p>
+            </div>
+            
+            <div ng-show="failMessage">
+                <p class="alert alert-danger">{{failMessage}}</p>
+            </div>
+    
+           
+            <label for="nepublier"> Ne pas publier</label>
+            <input type="checkbox"  name="nepublier" id="nepublier" ng-model="update._id_ne_pas_publier" checked>
+        <span ng-if="update._id_ne_pas_publier === 'true'" class="alert alert-danger" style="margin-bottom:5px">
+            Hors ligne
+          </span>
+          <span ng-if="update._id_ne_pas_publier === 'false'" class="alert alert-success">
+           En ligne
+        </span>
+            <br> <br> <br>
+    
+            <button class="btn btn-primary">Mettre a jour</button>
+        </form>
+    </div>
+
+</div>
+    </main>
+  </div>
+</div>
+<script src="asset/js/query-3.3.1.slim.min.js" ></script>
+      <script src="asset/js/bootstrap.bundle.min.js" ></script>
+        <script src="asset/js/feather.min.js"></script>
+        <script src="asset/js/Chart.min.js"></script>
+        <script src="asset/js/dashboard.js"></script></body>
+</html>

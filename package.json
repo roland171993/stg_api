@@ -1,0 +1,31 @@
+{
+  "name": "stopgalere-api",
+  "version": "1.0.0",
+  "description": "Modern MVC-style Node.js Express API for Jobs, Resumes, and Cover Letters",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon --watch src --exec \"node src/server.js\"",
+    "test": "jest --coverage"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "express-validator": "^6.14.2",
+    "helmet": "^6.0.0",
+    "mongoose": "^7.0.0",
+    "morgan": "^1.10.0",
+    "node-cron": "^3.0.0",
+    "onesignal-node": "^1.0.0",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "jest": "^29.4.3",
+    "nodemon": "^2.0.22",
+    "supertest": "^6.3.3"
+  }
+}
