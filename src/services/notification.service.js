@@ -2,10 +2,7 @@ const OneSignal = require('onesignal-node');
 const config = require('../config');
 const logger = require('../config/logger');
 
-const client = new OneSignal.Client(
-  config.oneSignal.appId,
-  config.oneSignal.apiKey
-);
+const client = new OneSignal.Client(config.oneSignal);
 
 /**
  * Send a push notification via OneSignal.

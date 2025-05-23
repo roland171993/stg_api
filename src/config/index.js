@@ -1,4 +1,3 @@
-// src/config/index.js
 require('dotenv').config();
 
 const requiredEnv = [
@@ -15,6 +14,11 @@ requiredEnv.forEach((key) => {
     process.exit(1);
   }
 });
+
+if (!/^[a-f0-9]{64}$/.test(process.env.JWT_SECRET)) {
+  console.error('JWT_SECRET must be a 64-character hex string');
+  process.exit(1);
+}
 
 const config = {
   port: parseInt(process.env.PORT, 10) || 3000,

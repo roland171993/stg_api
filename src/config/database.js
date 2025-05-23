@@ -1,4 +1,3 @@
-// src/config/database.js
 const mongoose = require('mongoose');
 const { dbUri } = require('./index');
 const logger = require('./logger');
