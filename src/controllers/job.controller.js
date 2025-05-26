@@ -12,8 +12,34 @@ exports.createJob = async (req, res, next) => {
 
 exports.getAllJobs = async (req, res, next) => {
   try {
-    const jobs = await Job.find().sort('-createdAt');
-    res.json({ jobs });
+    // Read page number from query string, default to 1
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = 15;                     // items per page
+    const skip = (page - 1) * limit;
+
+    // Fetch the requested page of jobs and the total count in parallel
+    const [jobs, total] = await Promise.all([
+      Job
+        .find()
+        .sort('-createdAt')
+        .skip(skip)
+        .limit(limit),
+      Job.countDocuments()
+    ]);
+
+    // Calculate total pages
+    const totalPages = Math.ceil(total / limit);
+
+    // Send response
+    res.json({
+      jobs,
+      pagination: {
+        total,         // total number of jobs in collection
+        page,          // current page number
+        totalPages,    // total number of pages
+        limit          // items per page
+      }
+    });
   } catch (err) {
     next(err);
   }

@@ -12,8 +12,30 @@ exports.createCoverLetter = async (req, res, next) => {
 
 exports.getAllCoverLetters = async (req, res, next) => {
   try {
-    const coverLetters = await CoverLetter.find().sort('-createdAt');
-    res.json({ coverLetters });
+    const page  = parseInt(req.query.page, 10) || 1;
+    const limit = 15;
+    const skip  = (page - 1) * limit;
+
+    const [coverLetters, total] = await Promise.all([
+      CoverLetter
+        .find()
+        .sort('-createdAt')
+        .skip(skip)
+        .limit(limit),
+      CoverLetter.countDocuments()
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
+
+    res.json({
+      coverLetters,
+      pagination: {
+        total,
+        page,
+        totalPages,
+        limit
+      }
+    });
   } catch (err) {
     next(err);
   }
