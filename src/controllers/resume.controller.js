@@ -12,8 +12,30 @@ exports.createResume = async (req, res, next) => {
 
 exports.getAllResumes = async (req, res, next) => {
   try {
-    const resumes = await Resume.find().sort('-createdAt');
-    res.json({ resumes });
+    const page  = parseInt(req.query.page, 10) || 1;
+    const limit = 15;
+    const skip  = (page - 1) * limit;
+
+    const [resumes, total] = await Promise.all([
+      Resume
+        .find()
+        .sort('-createdAt')
+        .skip(skip)
+        .limit(limit),
+      Resume.countDocuments()
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
+
+    res.json({
+      resumes,
+      pagination: {
+        total,
+        page,
+        totalPages,
+        limit
+      }
+    });
   } catch (err) {
     next(err);
   }
