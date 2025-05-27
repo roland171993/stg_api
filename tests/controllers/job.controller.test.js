@@ -1,11 +1,11 @@
-const { Job } = require('../../models');
+const { Job } = require('../../src/models');
 const {
   createJob, getAllJobs, getJobById,
   updateJob, deleteJob
-} = require('../../controllers/job.controller');
+} = require('../../src/controllers/job.controller');
 
-jest.mock('../../models', () => ({ Job: function(data) { this.data = data; } }));
-const JobMock = require('../../models').Job;
+jest.mock('../../src/models', () => ({ Job: function(data) { this.data = data; } }));
+const JobMock = require('../../src/models').Job;
 JobMock.find = jest.fn();
 JobMock.findById = jest.fn();
 JobMock.findByIdAndUpdate = jest.fn();

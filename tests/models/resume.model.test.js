@@ -1,4 +1,4 @@
-const Resume = require('../../models/resume.model');
+const Resume = require('../../src/models/resume.model');
 
 describe('Resume Model', () => {
   it('defaults unpublished to false', () => {

@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
-const { User } = require('../../models');
-const { login, getCurrentUser } = require('../../controllers/auth.controller');
+const { User } = require('../../src/models');
+const { login, getCurrentUser } = require('../../src/controllers/auth.controller');
 
-jest.mock('../../models', () => ({
+jest.mock('../../src/models', () => ({
   User: {
     findOne: jest.fn(),
     findById: jest.fn()

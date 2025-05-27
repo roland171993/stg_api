@@ -1,4 +1,4 @@
-const CoverLetter = require('../../models/cover-letter.model');
+const CoverLetter = require('../../src/models/cover-letter.model');
 
 describe('Cover Letter Model', () => {
   it('defaults unpublished to false', () => {

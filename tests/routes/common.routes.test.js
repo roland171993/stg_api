@@ -1,4 +1,4 @@
-const commonRoutes = require('../../routes/common.routes');
+const commonRoutes = require('../../src/routes/common.routes');
 
 describe('Common Routes', () => {
   it('has lookup GET endpoints', () => {
