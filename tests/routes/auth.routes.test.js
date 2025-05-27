@@ -1,4 +1,4 @@
-const authRoutes = require('../../routes/auth.routes');
+const authRoutes = require('../../src/routes/auth.routes');
 
 describe('Auth Routes', () => {
   it('has /login POST and /me GET', () => {

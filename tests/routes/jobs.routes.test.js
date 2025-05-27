@@ -1,4 +1,4 @@
-const jobsRoutes = require('../../routes/jobs.routes');
+const jobsRoutes = require('../../src/routes/jobs.routes');
 
 describe('Jobs Routes', () => {
   it('defines CRUD paths for jobs', () => {

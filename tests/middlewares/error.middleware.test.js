@@ -1,6 +1,6 @@
-jest.mock('../../config/logger', () => ({ error: jest.fn() }));
-const logger = require('../../config/logger');
-const handleError = require('../../middlewares/error.middleware');
+jest.mock('../../src/config/logger', () => ({ error: jest.fn() }));
+const logger = require('../../src/config/logger');
+const handleError = require('../../src/middlewares/error.middleware');
 
 describe('Error Middleware', () => {
   let err, req, res, next ;

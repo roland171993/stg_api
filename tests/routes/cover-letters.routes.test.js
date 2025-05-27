@@ -1,4 +1,4 @@
-const coverRoutes = require('../../routes/cover-letters.routes');
+const coverRoutes = require('../../src/routes/cover-letters.routes');
 
 describe('Cover Letters Routes', () => {
   it('defines CRUD paths for cover letters', () => {

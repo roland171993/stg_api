@@ -1,4 +1,4 @@
-const resumesRoutes = require('../../routes/resumes.routes');
+const resumesRoutes = require('../../src/routes/resumes.routes');
 
 describe('Resumes Routes', () => {
   it('defines CRUD paths for resumes', () => {

@@ -1,11 +1,11 @@
-const { Resume } = require('../../models');
+const { Resume } = require('../../src/models');
 const {
   createResume, getAllResumes, getResumeById,
   updateResume, deleteResume
-} = require('../../controllers/resume.controller');
+} = require('../../src/controllers/resume.controller');
 
-jest.mock('../../models', () => ({ Resume: function(data) { this.data = data; } }));
-const ResumeMock = require('../../models').Resume;
+jest.mock('../../src/models', () => ({ Resume: function(data) { this.data = data; } }));
+const ResumeMock = require('../../src/models').Resume;
 ResumeMock.find = jest.fn();
 ResumeMock.findById = jest.fn();
 ResumeMock.findByIdAndUpdate = jest.fn();

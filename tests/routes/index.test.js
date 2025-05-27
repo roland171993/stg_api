@@ -1,4 +1,4 @@
-const apiRouter = require('../../routes/index');
+const apiRouter = require('../../src/routes/index');
 
 describe('API Index Router', () => {
   it('mounts feature routers', () => {

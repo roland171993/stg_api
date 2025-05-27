@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const User = require('../../models/user.model');
+const User = require('../../src/models/user.model');
 
 describe('User Model', () => {
   it('defines comparePassword', () => {

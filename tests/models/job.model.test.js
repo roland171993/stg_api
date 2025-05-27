@@ -1,4 +1,4 @@
-const Job = require('../../models/job.model');
+const Job = require('../../src/models/job.model');
 
 describe('Job Model', () => {
   it('defaults unpublished to false', () => {
