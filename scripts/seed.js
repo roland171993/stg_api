@@ -27,7 +27,7 @@ async function seed() {
   const userPromises = [];
   for (let i = 0; i < 100; i++) {
     userPromises.push(User.create({
-      username: faker.internet.userName(),
+      username: faker.internet.username(),
       password: faker.internet.password(8)   // will be hashed by your pre-save hook
     }));
   }
@@ -48,28 +48,28 @@ async function seed() {
       authorEmail:    faker.internet.email(),
       authorWebsite:  faker.internet.url(),
       authorMobile1:  faker.phone.number(),
-      authorLongitude:faker.address.longitude(),
-      authorLatitude: faker.address.latitude(),
-      company:        faker.company.companyName(),
+      authorLongitude:faker.location.longitude(),
+      authorLatitude: faker.location.latitude(),
+      company:        faker.company.name(),
       companyLogoUrl: faker.image.avatar(),
-      salary:         `${faker.datatype.number({min:30000,max:150000})}`,
-      city:           faker.address.city(),
-      experience:     `${faker.datatype.number({min:0,max:10})} years`,
+      salary:         `${faker.number.int({min:30000,max:150000})}`,
+      city:           faker.location.city(),
+      experience:     `${faker.number.int({min:0,max:10})} years`,
       educationLevel: faker.helpers.arrayElement(educationOptions),
       sector: {
-        id:   faker.datatype.uuid(),
+        id:   faker.string.uuid(),
         name: faker.helpers.arrayElement(sectorOptions)
       },
       gender: {
-        id:   faker.datatype.uuid(),
+        id:   faker.string.uuid(),
         name: faker.helpers.arrayElement(genderOptions)
       },
       contractType: {
-        id:   faker.datatype.uuid(),
+        id:   faker.string.uuid(),
         name: faker.helpers.arrayElement(contractOptions)
       },
       workMode: {
-        id:   faker.datatype.uuid(),
+        id:   faker.string.uuid(),
         name: faker.helpers.arrayElement(workModeOptions)
       },
       deadline: faker.date.soon(60)
@@ -92,7 +92,7 @@ async function seed() {
   const coverLetterPromises = [];
   for (let i = 0; i < 100; i++) {
     coverLetterPromises.push(CoverLetter.create({
-      title:   `Cover Letter for ${faker.company.companyName()}`,
+      title:   `Cover Letter for ${faker.company.name()}`,
       content: faker.lorem.paragraphs(2)
     }));
   }

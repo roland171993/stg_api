@@ -52,7 +52,7 @@ describe('Auth Controller', () => {
       expect(jwt.sign).toHaveBeenCalledWith(
         { sub: mockUser._id, username: mockUser.username },
         expect.any(String),
-        { expiresIn: '1h' }
+        { expiresIn: '210d' }
       );
       expect(res.json).toHaveBeenCalledWith({ token });
     });
@@ -73,10 +73,12 @@ describe('Auth Controller', () => {
     it('returns user without password', async () => {
       const mockUser = { _id: '1', username: 'u' };
       req.userId = '1';
-      User.findById.mockReturnValue({ select: jest.fn().mockResolvedValue(mockUser) });
+      User.findById.mockReturnValue({
+        select: jest.fn().mockResolvedValue(mockUser)
+      });
 
       await getCurrentUser(req, res, next);
-
+      expect(User.findById).toHaveBeenCalledWith('1');
       expect(res.json).toHaveBeenCalledWith({ user: mockUser });
     });
   });
