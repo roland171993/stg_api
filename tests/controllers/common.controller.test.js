@@ -1,8 +1,9 @@
+const { Job } = require('../../models');
 const ctrl = require('../../controllers/common.controller');
-const Sector = require('../../models/secteurActiviteModel');
-const Gender = require('../../models/sexeModel');
-const ContractType = require('../../models/typeTravailModel');
-const WorkMode = require('../../models/modeTravailModel');
+
+jest.mock('../../models', () => ({
+  Job: { aggregate: jest.fn() }
+}));
 
 describe('Common Controller', () => {
   let req, res, next;
@@ -11,40 +12,33 @@ describe('Common Controller', () => {
     req = {};
     res = { json: jest.fn(), status: jest.fn().mockReturnThis() };
     next = jest.fn();
-    [Sector, Gender, ContractType, WorkMode].forEach(M => { M.find = jest.fn(); });
+    Job.aggregate.mockReset();
   });
 
-  it('getSectors returns list', async () => {
-    const arr = [{ name: 'IT' }];
-    Sector.find.mockReturnValue({ sort: jest.fn().mockResolvedValue(arr) });
-    await ctrl.getSectors(req, res, next);
-    expect(res.json).toHaveBeenCalledWith({ sectors: arr });
-  });
+  const testLookup = (field, endpoint) => {
+    it(`get${endpoint} uses correct pipeline`, async () => {
+      const mockResult = [{ id: '1', name: 'Test' }];
+      Job.aggregate.mockResolvedValue(mockResult);
 
-  it('getGenders returns list', async () => {
-    const arr = [{ name: 'Male' }];
-    Gender.find.mockReturnValue({ sort: jest.fn().mockResolvedValue(arr) });
-    await ctrl.getGenders(req, res, next);
-    expect(res.json).toHaveBeenCalledWith({ genders: arr });
-  });
+      await ctrl[`get${endpoint}`](req, res, next);
+      
+      expect(Job.aggregate).toHaveBeenCalledWith([
+        { $group: { _id: `$${field}.id`, name: { $first: `$${field}.name` } } },
+        { $project: { id: '$_id', name: 1, _id: 0 } },
+        { $sort: { name: 1 } }
+      ]);
+      expect(res.json).toHaveBeenCalledWith({ [endpoint.toLowerCase()]: mockResult });
+    });
+  };
 
-  it('getContractTypes returns list', async () => {
-    const arr = [{ name: 'Full-time' }];
-    ContractType.find.mockReturnValue({ sort: jest.fn().mockResolvedValue(arr) });
-    await ctrl.getContractTypes(req, res, next);
-    expect(res.json).toHaveBeenCalledWith({ contractTypes: arr });
-  });
+  testLookup('sector', 'Sectors');
+  testLookup('gender', 'Genders');
+  testLookup('contractType', 'ContractTypes');
+  testLookup('workMode', 'WorkModes');
 
-  it('getWorkModes returns list', async () => {
-    const arr = [{ name: 'Remote' }];
-    WorkMode.find.mockReturnValue({ sort: jest.fn().mockResolvedValue(arr) });
-    await ctrl.getWorkModes(req, res, next);
-    expect(res.json).toHaveBeenCalledWith({ workModes: arr });
-  });
-
-  it('forwards errors in getSectors', async () => {
-    const err = new Error();
-    Sector.find.mockImplementation(() => { throw err; });
+  it('forwards aggregation errors', async () => {
+    const err = new Error('Aggregation failed');
+    Job.aggregate.mockRejectedValue(err);
     await ctrl.getSectors(req, res, next);
     expect(next).toHaveBeenCalledWith(err);
   });
