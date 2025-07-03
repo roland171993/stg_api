@@ -1,9 +1,6 @@
 # Dependencies
 /node_modules/
 
-# Environment
-.env
-
 # Logs
 npm-debug.log*
 yarn-error.log*
