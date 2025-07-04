@@ -1,4 +1,3 @@
-// tests/routes/resumes.e2e.test.js
 
 const request = require('supertest');
 const mongoose = require('mongoose');

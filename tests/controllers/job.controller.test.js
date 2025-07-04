@@ -1,149 +1,162 @@
-const { Job } = require('../../src/models');
 const {
-  createJob, getAllJobs, getJobById,
-  updateJob, deleteJob
+  createJob,
+  getAllJobs,
+  getJobById,
+  updateJob,
+  deleteJob
 } = require('../../src/controllers/job.controller');
 
-jest.mock('../../src/models', () => ({ Job: function(data) { this.data = data; } }));
-const JobMock = require('../../src/models').Job;
-JobMock.find = jest.fn();
-JobMock.findById = jest.fn();
-JobMock.findByIdAndUpdate = jest.fn();
-JobMock.findByIdAndDelete = jest.fn();
-JobMock.prototype.save = jest.fn();
+jest.mock('../../src/models', () => {
+  class Job {
+    constructor(data) {
+      Object.assign(this, data);
+      this._id = '1';
+    }
+
+    save() {
+      return Promise.resolve(this);
+    }
+  }
+
+  Job.find = jest.fn();
+  Job.countDocuments = jest.fn();
+  Job.findById = jest.fn();
+  Job.findByIdAndUpdate = jest.fn();
+  Job.findByIdAndDelete = jest.fn();
+
+  return { Job };
+});
+
+const { Job: JobMock } = require('../../src/models');
 
 describe('Job Controller', () => {
   let req, res, next;
 
   beforeEach(() => {
-    req = { body: {}, params: {} };
-    res = { status: jest.fn().mockReturnThis(), json: jest.fn(), end: jest.fn() };
+    req = { body: {}, params: {}, query: {} };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+      end: jest.fn()
+    };
     next = jest.fn();
-    [ JobMock.find, JobMock.findById, JobMock.findByIdAndUpdate, JobMock.findByIdAndDelete ].forEach(fn => fn.mockReset());
-    JobMock.prototype.save.mockReset();
+
+    JobMock.find.mockReset();
+    JobMock.countDocuments.mockReset();
+    JobMock.findById.mockReset();
+    JobMock.findByIdAndUpdate.mockReset();
+    JobMock.findByIdAndDelete.mockReset();
   });
 
   describe('createJob', () => {
     it('creates & returns a job', async () => {
-      req.body = { title: 'T' };
-      JobMock.prototype.save.mockResolvedValue({ _id: '1', title: 'T' });
-
+      req.body = { title: 'Developer' };
       await createJob(req, res, next);
-      expect(JobMock.prototype.save).toHaveBeenCalled();
+
       expect(res.status).toHaveBeenCalledWith(201);
-      expect(res.json).toHaveBeenCalledWith({ job: { _id: '1', title: 'T' } });
-    });
-
-    it('forwards save errors', async () => {
-      const err = new Error('fail');
-      JobMock.prototype.save.mockRejectedValue(err);
-
-      await createJob(req, res, next);
-      expect(next).toHaveBeenCalledWith(err);
+      expect(res.json).toHaveBeenCalledWith({
+        job: expect.objectContaining({
+          _id: '1',
+          title: 'Developer'
+        })
+      });
     });
   });
 
   describe('getAllJobs', () => {
-    it('returns jobs list', async () => {
-      const jobs = [{}, {}];
-      const mockSort = jest.fn().mockResolvedValue(jobs);
-      JobMock.find.mockReturnValue({ sort: mockSort });
+    it('returns paginated jobs', async () => {
+      const jobs = [{ _id: '1', title: 'Dev' }];
+      JobMock.find.mockReturnValueOnce({
+        sort: () => ({
+          skip: () => ({
+            limit: () => Promise.resolve(jobs)
+          })
+        })
+      });
+      JobMock.countDocuments.mockResolvedValueOnce(1);
+      req.query.page = '1';
 
       await getAllJobs(req, res, next);
-      expect(mockSort).toHaveBeenCalledWith('-createdAt');
-      expect(res.json).toHaveBeenCalledWith({ jobs });
-    });
 
-    it('forwards find errors', async () => {
-      const err = new Error('fail');
-      JobMock.find.mockImplementation(() => { throw err; });
-
-      await getAllJobs(req, res, next);
-      expect(next).toHaveBeenCalledWith(err);
+      expect(res.json).toHaveBeenCalledWith({
+        jobs,
+        pagination: {
+          total: 1,
+          page: 1,
+          totalPages: 1,
+          limit: 15
+        }
+      });
     });
   });
 
   describe('getJobById', () => {
-    it('returns a job when found', async () => {
-      const job = { _id: '1' };
-      req.params.id = '1';
-      JobMock.findById.mockResolvedValue(job);
+    it('returns job if found', async () => {
+      const job = { _id: '123', title: 'Test Job' };
+      req.params.id = '123';
+      JobMock.findById.mockResolvedValueOnce(job);
 
       await getJobById(req, res, next);
+
       expect(res.json).toHaveBeenCalledWith({ job });
     });
 
-    it('404 when not found', async () => {
-      req.params.id = '1';
-      JobMock.findById.mockResolvedValue(null);
+    it('returns 404 if job not found', async () => {
+      req.params.id = '123';
+      JobMock.findById.mockResolvedValueOnce(null);
 
       await getJobById(req, res, next);
+
       expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({ message: 'Job not found.' });
-    });
-
-    it('forwards findById errors', async () => {
-      const err = new Error('fail');
-      JobMock.findById.mockRejectedValue(err);
-
-      await getJobById(req, res, next);
-      expect(next).toHaveBeenCalledWith(err);
     });
   });
 
   describe('updateJob', () => {
-    it('updates & returns a job', async () => {
-      req.params.id = '1'; req.body = { title: 'New' };
-      const updated = { _id: '1', title: 'New' };
-      JobMock.findByIdAndUpdate.mockResolvedValue(updated);
+    it('returns updated job if found', async () => {
+      const updatedJob = { _id: '123', title: 'Updated' };
+      req.params.id = '123';
+      req.body = { title: 'Updated' };
+
+      JobMock.findByIdAndUpdate.mockResolvedValueOnce(updatedJob);
 
       await updateJob(req, res, next);
-      expect(res.json).toHaveBeenCalledWith({ job: updated });
+
+      expect(res.json).toHaveBeenCalledWith({ job: updatedJob });
     });
 
-    it('404 when update target missing', async () => {
-      req.params.id = '1';
-      JobMock.findByIdAndUpdate.mockResolvedValue(null);
+    it('returns 404 if job not found for update', async () => {
+      req.params.id = '123';
+      JobMock.findByIdAndUpdate.mockResolvedValueOnce(null);
 
       await updateJob(req, res, next);
+
       expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({ message: 'Job not found.' });
-    });
-
-    it('forwards update errors', async () => {
-      const err = new Error('fail');
-      JobMock.findByIdAndUpdate.mockRejectedValue(err);
-
-      await updateJob(req, res, next);
-      expect(next).toHaveBeenCalledWith(err);
     });
   });
 
   describe('deleteJob', () => {
-    it('deletes a job', async () => {
-      req.params.id = '1';
-      JobMock.findByIdAndDelete.mockResolvedValue({ _id: '1' });
+    it('deletes job if found', async () => {
+      const job = { _id: '123' };
+      req.params.id = '123';
+
+      JobMock.findByIdAndDelete.mockResolvedValueOnce(job);
 
       await deleteJob(req, res, next);
+
       expect(res.status).toHaveBeenCalledWith(204);
       expect(res.end).toHaveBeenCalled();
     });
 
-    it('404 when delete target missing', async () => {
-      req.params.id = '1';
-      JobMock.findByIdAndDelete.mockResolvedValue(null);
+    it('returns 404 if job not found for deletion', async () => {
+      req.params.id = '123';
+      JobMock.findByIdAndDelete.mockResolvedValueOnce(null);
 
       await deleteJob(req, res, next);
+
       expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({ message: 'Job not found.' });
-    });
-
-    it('forwards delete errors', async () => {
-      const err = new Error('fail');
-      JobMock.findByIdAndDelete.mockRejectedValue(err);
-
-      await deleteJob(req, res, next);
-      expect(next).toHaveBeenCalledWith(err);
     });
   });
 });

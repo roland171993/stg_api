@@ -1,4 +1,3 @@
-// src/controllers/common.controller.js
 const { Job } = require('../models');
 
 async function getLookup(field) {

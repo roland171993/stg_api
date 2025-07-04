@@ -1,7 +1,7 @@
-const { Job } = require('../../models');
-const ctrl = require('../../controllers/common.controller');
+const { Job } = require('../../src/models');
+const ctrl = require('../../src/controllers/common.controller');
 
-jest.mock('../../models', () => ({
+jest.mock('../../src/models', () => ({
   Job: { aggregate: jest.fn() }
 }));
 
