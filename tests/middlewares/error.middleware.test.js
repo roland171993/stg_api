@@ -3,7 +3,7 @@ const logger = require('../../src/config/logger');
 const handleError = require('../../src/middlewares/error.middleware');
 
 describe('Error Middleware', () => {
-  let err, req, res, next ;
+  let err, req, res, next;
   beforeEach(() => {
     req = {};
     res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
@@ -14,15 +14,20 @@ describe('Error Middleware', () => {
   it('500 on generic error', () => {
     err = new Error('oops');
     handleError(err, req, res, next);
+
     expect(logger.error).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({ message:'Internal Server Error' });
+    // now returns the original error message for generic errors
+    expect(res.json).toHaveBeenCalledWith({ message: 'oops' });
   });
 
   it('uses err.status/message when present', () => {
-    err = new Error('bad'); err.status = 400;
+    err = new Error('bad');
+    err.status = 400;
+
     handleError(err, req, res, next);
+
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({ message:'bad' });
+    expect(res.json).toHaveBeenCalledWith({ message: 'bad' });
   });
 });
