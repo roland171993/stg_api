@@ -21,13 +21,20 @@ describe('Common Controller', () => {
       Job.aggregate.mockResolvedValue(mockResult);
 
       await ctrl[`get${endpoint}`](req, res, next);
-      
+
       expect(Job.aggregate).toHaveBeenCalledWith([
         { $group: { _id: `$${field}.id`, name: { $first: `$${field}.name` } } },
         { $project: { id: '$_id', name: 1, _id: 0 } },
         { $sort: { name: 1 } }
       ]);
-      expect(res.json).toHaveBeenCalledWith({ [endpoint.toLowerCase()]: mockResult });
+
+      const keyMap = {
+        Sectors: 'sectors',
+        Genders: 'genders',
+        ContractTypes: 'contractTypes',
+        WorkModes: 'workModes',
+      };
+      expect(res.json).toHaveBeenCalledWith({ [keyMap[endpoint]]: mockResult });
     });
   };
 
