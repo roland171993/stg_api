@@ -3,10 +3,10 @@ const mongoose    = require('mongoose');
 const { faker }   = require('@faker-js/faker');
 
 // import your models
-const User        = require('../src/models/user.model');           // :contentReference[oaicite:0]{index=0}
-const Job         = require('../src/models/job.model');            // :contentReference[oaicite:1]{index=1}
-const Resume      = require('../src/models/resume.model');         // :contentReference[oaicite:2]{index=2}
-const CoverLetter = require('../src/models/cover-letter.model');   // :contentReference[oaicite:3]{index=3}
+const User        = require('../src/models/user.model');
+const Job         = require('../src/models/job.model');
+const Resume      = require('../src/models/resume.model');
+const CoverLetter = require('../src/models/cover-letter.model');
 
 async function seed() {
   // 1) connect
@@ -16,34 +16,32 @@ async function seed() {
   });
 
   // 2) wipe existing data
-  await Promise.all([
-    User.deleteMany({}),
-    Job.deleteMany({}),
-    Resume.deleteMany({}),
-    CoverLetter.deleteMany({})
-  ]);
+  await User.deleteMany({});
+  await Job.deleteMany({});
+  await Resume.deleteMany({});
+  await CoverLetter.deleteMany({});
 
-  // 3) create 100 users
-  const userPromises = [];
+  // 3) create 100 users (sequential)
+  const users = [];
   for (let i = 0; i < 100; i++) {
-    userPromises.push(User.create({
+    const user = new User({
       username: faker.internet.username(),
-      password: faker.internet.password(8)   // will be hashed by your pre-save hook
-    }));
+      password: faker.internet.password(8)   // hashed by pre-save hook
+    });
+    await user.save();
+    users.push(user);
   }
-  const users = await Promise.all(userPromises);
 
-  // 4) create 100 jobs
-  const sectorOptions      = ['IT','Finance','Healthcare','Education','Retail'];
-  const genderOptions      = ['Any','Male','Female'];
-  const contractOptions    = ['Full-time','Part-time','Contract','Temporary'];
-  const workModeOptions    = ['On-site','Remote','Hybrid'];
-  const educationOptions   = ['High School','Associate','Bachelor','Master','PhD'];
+  // 4) create 100 jobs (sequential)
+  const sectorOptions    = ['IT','Finance','Healthcare','Education','Retail'];
+  const genderOptions    = ['Any','Male','Female'];
+  const contractOptions  = ['Full-time','Part-time','Contract','Temporary'];
+  const workModeOptions  = ['On-site','Remote','Hybrid'];
+  const educationOptions = ['High School','Associate','Bachelor','Master','PhD'];
 
-  const jobPromises = [];
   for (let i = 0; i < 100; i++) {
-    jobPromises.push(Job.create({
-      title:          faker.lorem.words(4),
+    const job = new Job({
+      title:          "Job N°" + i,
       description:    faker.lorem.sentences(2),
       authorEmail:    faker.internet.email(),
       authorWebsite:  faker.internet.url(),
@@ -72,33 +70,31 @@ async function seed() {
         id:   faker.string.uuid(),
         name: faker.helpers.arrayElement(workModeOptions)
       },
-      deadline: faker.date.soon(60)
-    }));
+      deadline: faker.date.soon({ days: 60 })
+    });
+    await job.save();
   }
-  await Promise.all(jobPromises);
 
-  // 5) create 100 resumes
-  const resumePromises = [];
+  // 5) create 100 resumes (sequential)
   for (let i = 0; i < 100; i++) {
-    resumePromises.push(Resume.create({
-      title:       `${faker.name.firstName()} ${faker.name.lastName()} CV`,
+    const resume = new Resume({
+      title:       `${faker.person.firstName()} ${faker.person.lastName()} CV`,
       downloadUrl: faker.internet.url(),
       content:     faker.lorem.paragraphs(2)
-    }));
+    });
+    await resume.save();
   }
-  await Promise.all(resumePromises);
 
-  // 6) create 100 cover letters
-  const coverLetterPromises = [];
+  // 6) create 100 cover letters (sequential)
   for (let i = 0; i < 100; i++) {
-    coverLetterPromises.push(CoverLetter.create({
+    const coverLetter = new CoverLetter({
       title:   `Cover Letter for ${faker.company.name()}`,
       content: faker.lorem.paragraphs(2)
-    }));
+    });
+    await coverLetter.save();
   }
-  await Promise.all(coverLetterPromises);
 
-  console.log('✅  Database seeded with 100 users, jobs, resumes & cover letters.');
+  console.log('✅ Database seeded with 100 users, jobs, resumes & cover letters in order.');
   await mongoose.disconnect();
   process.exit(0);
 }
