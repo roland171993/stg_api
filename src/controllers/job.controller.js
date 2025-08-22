@@ -27,17 +27,23 @@ exports.getAllJobs = async (req, res, next) => {
       Job.countDocuments()
     ]);
 
-    // Calculate total pages
-    const totalPages = Math.ceil(total / limit);
+    // Calculate total pages (a.k.a. lastPage)
+    const totalPages = Math.max(1, Math.ceil(total / limit));
+
+    // Derive neighbors
+    const previousPage = page > 1 ? page - 1 : null;
+    const nextPage = page < totalPages ? page + 1 : null;
 
     // Send response
     res.json({
       jobs,
       pagination: {
-        total,         // total number of jobs in collection
-        page,          // current page number
-        totalPages,    // total number of pages
-        limit          // items per page
+        total,            // total number of jobs in collection
+        limit,            // items per page
+        currentPage: page,
+        lastPage: totalPages,
+        previousPage,     // null if you're on the first page
+        nextPage          // null if you're on the last page
       }
     });
   } catch (err) {
