@@ -4,6 +4,7 @@ const jobsRoutes = require('./jobs.routes');
 const resumesRoutes = require('./resumes.routes');
 const coverLettersRoutes = require('./cover-letters.routes');
 const commonRoutes = require('./common.routes');
+const healthRoutes = require('./health.routes');
 
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.use('/cover-letters', coverLettersRoutes);
 
 // Common lookups at root: /sectors, /genders, etc.
 router.use('/', commonRoutes);
+router.use('/', healthRoutes);
 
 module.exports = router;
