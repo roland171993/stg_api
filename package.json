@@ -1,6 +1,6 @@
 {
   "name": "stopgalere-api",
-  "version": "1.0.0",
+  "version": "4.0.1",
   "description": "Modern MVC-style Node.js Express API for Jobs, Resumes, and Cover Letters",
   "main": "src/server.js",
   "scripts": {

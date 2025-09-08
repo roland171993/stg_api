@@ -12,10 +12,12 @@ exports.createCoverLetter = async (req, res, next) => {
 
 exports.getAllCoverLetters = async (req, res, next) => {
   try {
-    const page  = parseInt(req.query.page, 10) || 1;
-    const limit = 15;
-    const skip  = (page - 1) * limit;
+    // Read page number from query string, default to 1
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = 15;                     // items per page
+    const skip = (page - 1) * limit;
 
+    // Fetch the requested page of CoverLetters and the total count in parallel
     const [coverLetters, total] = await Promise.all([
       CoverLetter
         .find()
@@ -25,15 +27,23 @@ exports.getAllCoverLetters = async (req, res, next) => {
       CoverLetter.countDocuments()
     ]);
 
-    const totalPages = Math.ceil(total / limit);
+    // Calculate total pages (a.k.a. lastPage)
+    const totalPages = Math.max(1, Math.ceil(total / limit));
 
+    // Derive neighbors
+    const previousPage = page > 1 ? page - 1 : null;
+    const nextPage = page < totalPages ? page + 1 : null;
+
+    // Send response
     res.json({
       coverLetters,
       pagination: {
-        total,
-        page,
-        totalPages,
-        limit
+        total,            // total number of jobs in collection
+        limit,            // items per page
+        currentPage: page,
+        lastPage: totalPages,
+        previousPage,     // null if you're on the first page
+        nextPage          // null if you're on the last page
       }
     });
   } catch (err) {

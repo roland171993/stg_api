@@ -82,7 +82,7 @@ async function seed() {
   const resumePromises = [];
   for (let i = 0; i < 100; i++) {
     resumePromises.push(Resume.create({
-      title:       `${faker.name.firstName()} ${faker.name.lastName()} CV`,
+      title:       "Resume N° "+i,
       downloadUrl: faker.internet.url(),
       content:     faker.lorem.paragraphs(2)
     }));
@@ -93,7 +93,7 @@ async function seed() {
   const coverLetterPromises = [];
   for (let i = 0; i < 100; i++) {
     coverLetterPromises.push(CoverLetter.create({
-      title:   `Cover Letter for ${faker.company.name()}`,
+      title:    "Cover Letter N° "+i,
       content: faker.lorem.paragraphs(2)
     }));
   }
