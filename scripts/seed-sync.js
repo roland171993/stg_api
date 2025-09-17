@@ -2,7 +2,7 @@ require('dotenv').config();
 const mongoose    = require('mongoose');
 const { faker }   = require('@faker-js/faker');
 
-// import your models
+
 const User        = require('../src/models/user.model');
 const Job         = require('../src/models/job.model');
 const Resume      = require('../src/models/resume.model');

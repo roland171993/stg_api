@@ -24,14 +24,12 @@ const DeviceSchema = new Schema(
 
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, default: null },
 
-    // Arbitrary tag bag (store as strings; OneSignal tags are string values)
     tags: {
       type: Map,
       of: String,
       default: {},
     },
 
-    // Per-category opt-in flags (booleans), e.g. { marketing: true, jobs: false }
     opt: {
       type: Map,
       of: Boolean,

@@ -3,6 +3,7 @@ const auth = require('../middlewares/auth.middleware');
 const { body } = require('express-validator');
 const { sendToExternalUserIds } = require('../services/notification.service');
 const { upsertDevice, updateOpt } = require('../services/device.service');
+const { publishNextJobAndNotify } = require('../jobs/add-job.job');
 
 router.post('/devices',
   body('playerId').isString().notEmpty(),
@@ -38,6 +39,16 @@ router.post('/test',
         data: { type: 'TEST' }
       });
       res.json(r);
+    } catch (e) { next(e); }
+  }
+);
+
+router.post('/test-next',
+  auth.requireAdmin,
+  async (req, res, next) => {
+    try {
+      await publishNextJobAndNotify();
+      res.json({ ok: true });
     } catch (e) { next(e); }
   }
 );

@@ -3,7 +3,6 @@ const { Job } = require('../models');
 const logger = require('../config/logger');
 
 // Every day at 00:00 – delete all jobs whose deadline has passed
-// (based on cronDelete.js schedule & logic) :contentReference[oaicite:2]{index=2}
 async function deleteExpiredJobs() {
   try {
     const now = new Date();

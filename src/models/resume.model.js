@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-// Adapted from original CvSchema :contentReference[oaicite:2]{index=2}
+
 const ResumeSchema = new Schema({
   title:        { type: String, required: true },
   downloadUrl:  { type: String, required: true },

@@ -11,9 +11,7 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-/**
- * Multer storage engine: filenames prefixed with timestamp and slugified.
- */
+// Multer storage engine: filenames prefixed with timestamp and slugified.
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadDir),
   filename: (req, file, cb) => {
@@ -26,9 +24,7 @@ const storage = multer.diskStorage({
   }
 });
 
-/**
- * Filter to allow only Word, HTML, or PDF documents.
- */
+// Filter to allow only Word, HTML, or PDF documents.
 function fileFilter(req, file, cb) {
   const allowed = /\.(doc|docx|html|htm|pdf)$/i;
   if (allowed.test(file.originalname)) {
@@ -38,10 +34,9 @@ function fileFilter(req, file, cb) {
   }
 }
 
-/**
- * Middleware to handle single resume upload on field "resumeFile".
- * Use in your route as: fileService.uploadResume(req, res, next)
- */
+// Middleware to handle single resume upload on field "resumeFile".
+// Use in your route as: fileService.uploadResume(req, res, next)
+
 const uploadResume = multer({ storage, fileFilter }).single('resumeFile');
 
 module.exports = {

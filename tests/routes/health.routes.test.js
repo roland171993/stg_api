@@ -1,15 +1,14 @@
-// tests/routes/health.routes.test.js
 const request = require('supertest');
 const express = require('express');
 
-// ✅ mock the real file path
+
 jest.mock('../../src/utils/system.utils', () => ({
   getMemoryInfo: () => ({ freeBytes: 111 * 1024 * 1024, totalBytes: 222 * 1024 * 1024 }),
   getDiskInfo: () => Promise.resolve({ availableBytes: 333 * 1024 * 1024, totalBytes: 444 * 1024 * 1024 }),
   bytesToMB: (bytes) => Math.round(bytes / (1024 * 1024)),
 }));
 
-// ✅ import the route using its real path
+
 const healthRoutes = require('../../src/routes/health.routes');
 
 function makeApp() {

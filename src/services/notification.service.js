@@ -7,17 +7,17 @@ if (!config?.oneSignal?.appId || !config?.oneSignal?.apiKey) {
   throw new Error('[OneSignal] Missing appId/apiKey in config.oneSignal');
 }
 
-/** v3.4.0 client: new Client(appId, apiKey) */
+
 const client = new OneSignal.Client(config.oneSignal.appId, config.oneSignal.apiKey);
 
-/** i18n helpers */
+
 function toLocalized(head, body) {
   const headings = typeof head === 'string' ? { en: head } : (head || { en: '' });
   const contents = typeof body === 'string' ? { en: body } : (body || { en: '' });
   return { headings, contents };
 }
 
-/** Build notification JSON (now supports imageUrl) */
+// Build notification JSON (now supports imageUrl) 
 function buildBasePayload({ title, body, data, url, ttl, imageUrl }) {
   const { headings, contents } = toLocalized(title, body);
   const payload = {
@@ -36,7 +36,7 @@ function buildBasePayload({ title, body, data, url, ttl, imageUrl }) {
     payload.mutable_content = true;             // iOS: allow rich push
   }
 
-  // Optional platform hints
+  
   if (config.oneSignal.android_channel_id)
     payload.android_channel_id = config.oneSignal.android_channel_id;
   if (config.oneSignal.ios_sound)
@@ -56,7 +56,7 @@ function audienceLabel(n) {
 }
 
 
-/** v3-only execSend using client.createNotification(JSON) */
+
 async function execSend(payload) {
   try {
     logger.info('[CRON] sendToAll execSend strat');
@@ -84,7 +84,7 @@ async function execSend(payload) {
   }
 }
 
-/* ------------------------------ Public API ------------------------------ */
+
 
 async function sendNotification(title, message, opts = {}) {
   return sendToAll({ title, body: message, ...opts });

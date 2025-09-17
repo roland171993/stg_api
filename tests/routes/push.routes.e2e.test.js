@@ -1,11 +1,7 @@
-/**
- * E2E-ish tests for the push router: we hit the endpoints and verify mocked side effects.
- * These still mock external services (DB/OneSignal), but run the full Express + middleware chain.
- */
 const request = require('supertest');
 const express = require('express');
 
-// ---- Mocks (same paths used in push.routes.js) ----
+// Mocks (same paths used in push.routes.js) 
 jest.mock('../services/device.service', () => ({
   upsertDevice: jest.fn(async (input) => ({ _id: 'devE2E', ...input })),
   updateOpt: jest.fn(async () => {}),

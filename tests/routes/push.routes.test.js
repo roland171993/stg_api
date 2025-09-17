@@ -5,7 +5,7 @@
 const request = require('supertest');
 const express = require('express');
 
-// ---- Mocks (match the paths used inside push.routes.js) ----
+//  Mocks (match the paths used inside push.routes.js) 
 jest.mock('../services/device.service', () => ({
   upsertDevice: jest.fn(async (input) => ({ _id: 'dev1', ...input })),
   updateOpt: jest.fn(async () => {}),

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const config = require('../config'); // must provide config.jwtSecret
+const config = require('../config');
 
 function decodeFromHeader(req) {
   const authHeader = req.headers.authorization;
@@ -14,17 +14,17 @@ function decodeFromHeader(req) {
   }
 }
 
-/** Attach req.user if token is valid; otherwise leave req.user undefined */
+// Attach req.user if token is valid; otherwise leave req.user undefined 
 function optional(req, res, next) {
   const payload = decodeFromHeader(req);
   if (payload) {
     req.user = { id: payload.sub, role: payload.role };
-    req.userId = payload.sub; // keep backward compat if code uses req.userId
+    req.userId = payload.sub;
   }
   next();
 }
 
-/** Require a valid token */
+// Require a valid token 
 function required(req, res, next) {
   const payload = decodeFromHeader(req);
   if (!payload) {
@@ -35,7 +35,7 @@ function required(req, res, next) {
   next();
 }
 
-/** Require a valid token AND admin role */
+// Require a valid token AND admin role 
 function requireAdmin(req, res, next) {
   const payload = decodeFromHeader(req);
   if (!payload) {
