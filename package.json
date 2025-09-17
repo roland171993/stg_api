@@ -26,7 +26,7 @@
     "mongoose": "7.8.7",
     "morgan": "1.10.0",
     "node-cron": "3.0.3",
-    "onesignal-node": "1.2.0",
+    "onesignal-node": "3.4.0",
     "winston": "3.17.0"
   },
   "devDependencies": {

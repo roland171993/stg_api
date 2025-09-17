@@ -1,25 +1,51 @@
 const { scheduleJob } = require('../services/cron.service');
 const { Job } = require('../models');
-const { sendNotification } = require('../services/notification.service');
+const { sendToAll } = require('../services/notification.service');
 const logger = require('../config/logger');
 
-// Every hour at minute 0, second 0 – re‐publish one unpublished job
-// (based on cronAddEmploi.js schedule & logic) :contentReference[oaicite:1]{index=1}
-async function republishStaleJobs() {
+async function publishNextJobAndNotify() {
   try {
-    const job = await Job.findOne({ unpublished: true });
-    if (job) {
-      job.unpublished = false;
-      await job.save();
-      await sendNotification(
-        `Job published: ${job.title}`,
-        job.description
-      );
-      logger.info(`Republished job ${job._id}`);
+    logger.info('[CRON] publishNextJobAndNotify Start');
+    const job = await Job.findOneAndUpdate(
+      { unpublished: true },
+      { $set: { unpublished: false, publishedAt: new Date() } },
+      { sort: { createdAt: 1 }, new: true }
+    );
+
+    if (!job) {
+      logger.info('[CRON] No unpublished jobs to publish right now.');
+      return;
     }
+
+    const title = job.title;
+    const body  = `📍 ${job.city}`;
+    const data  = {
+      type: 'JOB_PUBLISHED',
+      jobId: String(job._id),
+      city: job.city,
+      title: job.title,
+    };
+
+    logger.info('[CRON] publishNextJobAndNotify Build ok');
+
+    await sendToAll({
+      title,
+      body,
+      data,
+      imageUrl: job.companyLogoUrl || undefined,
+    });
+
+    logger.info('[CRON] Published and notified job', {
+      id: String(job._id),
+      title: job.title,
+      city: job.city,
+      imageUrl: job.companyLogoUrl || undefined,
+    });
   } catch (err) {
-    logger.error('Error in republishStaleJobs', err);
+    logger.error('[CRON] Error in publishNextJobAndNotify', { err });
   }
 }
 
-scheduleJob('0 0 * * * *', republishStaleJobs);
+scheduleJob('0 */30 * * * *', publishNextJobAndNotify);
+
+module.exports = { publishNextJobAndNotify };

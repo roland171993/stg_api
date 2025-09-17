@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const auth = require('../middlewares/auth');
+const auth = require('../middlewares/auth.middleware');
 const { body } = require('express-validator');
 const { sendToExternalUserIds } = require('../services/notification.service');
 const { upsertDevice, updateOpt } = require('../services/device.service');

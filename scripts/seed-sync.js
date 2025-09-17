@@ -53,6 +53,7 @@ async function seed() {
       authorMobile2:  "05 00 78 02 "+i,
       authorLongitude:faker.location.longitude(),
       authorLatitude: faker.location.latitude(),
+      unpublished: true,
       company:        faker.company.name(),
       companyLogoUrl: faker.image.avatar(),
       salary:         `${faker.number.int({min:30000,max:150000})}`,

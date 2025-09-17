@@ -1,7 +1,9 @@
-const Device = require('../models/device'); // define schema as per plan
+const Device = require('../models/device'); 
 const OneSignal = require('onesignal-node');
-const config = require('../../index');
-const client = new OneSignal.Client(config.oneSignal.appId, config.oneSignal.apiKey);
+const config = require('../config/index');
+const client = new OneSignal.Client({
+  app: { appAuthKey: config.oneSignal.apiKey, appId: config.oneSignal.appId }
+});
 
 async function upsertDevice({ userId, playerId, platform, tags = {}, appVersion, deviceInfo }) {
   const doc = await Device.findOneAndUpdate(

@@ -15,8 +15,8 @@ router.get('/', getAllResumes);
 router.get('/:id', getResumeById);
 
 // Create, update, delete (protected)
-router.post('/', auth, createResume);
-router.put('/:id', auth, updateResume);
-router.delete('/:id', auth, deleteResume);
+router.post('/', auth.required, createResume);
+router.put('/:id', auth.required, updateResume);
+router.delete('/:id', auth.required, deleteResume);
 
 module.exports = router;
