@@ -46,6 +46,7 @@ async function publishNextJobAndNotify() {
   }
 }
 
-scheduleJob('0 */30 * * * *', publishNextJobAndNotify);
+// Run every 1 hour
+scheduleJob('0 0 * * * *', publishNextJobAndNotify);
 
 module.exports = { publishNextJobAndNotify };
