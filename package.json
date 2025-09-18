@@ -13,7 +13,7 @@
     "lint:fix": "eslint \"src/**/*.js\" --fix"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": "18.20.8"
   },
   "dependencies": {
     "bcryptjs": "3.0.2",
