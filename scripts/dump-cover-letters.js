@@ -76,7 +76,7 @@ async function* iterWordFiles(dir) {
 // --- Main ---
 (async () => {
   const inputDir = expandHome(
-    process.argv[2] || '~/Documents/CENTENIER/stg_api/document/cover_letters_ini'
+    process.argv[2] || './document/cover_letters_ini'
   );
 
   console.log('Connecting to MongoDB...');
