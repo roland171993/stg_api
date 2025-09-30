@@ -7,8 +7,9 @@
     "start": "node src/server.js",
     "dev": "nodemon --watch src --exec \"node src/server.js\"",
     "test": "jest --coverage",
-    "seed-async":  "node scripts/seed-async.js",
-    "seed-sync":  "node scripts/seed-sync.js",
+    "seed-async": "node scripts/seed-async.js",
+    "seed-sync": "node scripts/seed-sync.js",
+    "dump-cover-letters":"node scripts/dump-cover-letters.js",
     "lint": "eslint \"src/**/*.js\"",
     "lint:fix": "eslint \"src/**/*.js\" --fix"
   },
@@ -23,11 +24,13 @@
     "express-validator": "6.15.0",
     "helmet": "6.2.0",
     "jsonwebtoken": "9.0.2",
+    "mammoth": "^1.11.0",
     "mongoose": "7.8.7",
     "morgan": "1.10.0",
     "node-cron": "3.0.3",
     "onesignal-node": "3.4.0",
-    "winston": "3.17.0"
+    "winston": "3.17.0",
+    "word-extractor": "^1.0.4"
   },
   "devDependencies": {
     "@eslint/js": "9.27.0",
